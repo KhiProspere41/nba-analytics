@@ -76,6 +76,7 @@ def main():
     corr_df = analysis.correlation_matrix(df)
     top_value_df = analysis.top_value_players(df)
     bottom_value_df = analysis.bottom_value_players(df)
+    decorated_df = analysis.most_decorated_players(df)
     position_df = analysis.position_summary(df)
 
     out_path = analysis.save_processed_data(df)
@@ -87,12 +88,17 @@ def main():
     print("\nBottom 5 most overpaid players (Value Index):")
     print(bottom_value_df.head(5).to_string(index=False))
 
+    print("\nTop 5 most decorated players (career major awards):")
+    print(decorated_df.head(5).to_string(index=False))
+
     print("\nSalary <-> performance correlations:")
     print(corr_df["SALARY"].drop("SALARY").to_string())
 
     if not args.skip_viz:
         print("\nGenerating charts...")
-        paths = visualizations.generate_all_charts(df, corr_df, top_value_df, bottom_value_df, position_df)
+        paths = visualizations.generate_all_charts(
+            df, corr_df, top_value_df, bottom_value_df, decorated_df, position_df
+        )
         for p in paths:
             print(f"  Saved {p}")
     else:

@@ -189,6 +189,13 @@ def bottom_value_players(df: pd.DataFrame, n: int = 15) -> pd.DataFrame:
     ].reset_index(drop=True)
 
 
+def most_decorated_players(df: pd.DataFrame, n: int = 15) -> pd.DataFrame:
+    """Players with the highest career major-award counts."""
+    return df.nlargest(n, "MAJOR_AWARDS")[
+        ["PLAYER", "TEAM", "POSITION", "SALARY", "MAJOR_AWARDS", "VALUE_INDEX"]
+    ].reset_index(drop=True)
+
+
 def position_summary(df: pd.DataFrame) -> pd.DataFrame:
     return (
         df.groupby("POSITION")

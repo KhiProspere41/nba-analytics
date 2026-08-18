@@ -1,6 +1,6 @@
 # Chart Guide
 
-What each chart in this project shows, with the real numbers behind it. Regenerate all five with `python main.py`; these come from the bundled 2025-26 dataset, top 80 scorers.
+What each chart in this project shows, with the real numbers behind it. Regenerate all seven with `python main.py`; these come from the bundled 2025-26 dataset, top 80 scorers.
 
 ## Salary vs. On-Court Performance
 
@@ -33,6 +33,20 @@ Twelve of these fifteen players carry one or fewer career major awards, three of
 The same ranking, flipped: the highest earners returning the least EFF per salary dollar. Stephen Curry sits at the bottom at 0.39, a $59.6M salary against a 23.3 EFF. Devin Booker, OG Anunoby, LeBron James, and Kevin Durant follow within a few hundredths of him, each earning more than $39M.
 
 Fourteen of these fifteen players have won at least one career major award; LeBron carries 63. The exception is Jerami Grant, who lands here on box-score production alone, no accolades, $32M this season, an EFF of 15.4. For the other fourteen, the salary prices in what a box score can't: name recognition, playoff pedigree, the ability to sell out an arena on a Tuesday in January. A rookie on a $2M deal can post a better Value Index than Curry without coming within miles of his value to a franchise.
+
+## Career Awards vs. Salary
+
+![Awards vs Salary](examples/awards_vs_salary.png)
+
+Same 80 players, career major awards along the x-axis, salary along the y-axis. Fourteen carry zero career awards, and their salaries still climb as high as $32.0M, Jerami Grant's number. Past zero, the pattern holds: every player with 20 or more career awards earns at least $39.4M. Stephen Curry holds the highest salary in this chart, $59.6M, on 31 awards, about half of LeBron James's total of 63.
+
+## Most Decorated Players
+
+![Most Decorated Players](examples/most_decorated_players.png)
+
+Fifteen bars, ranked by career major awards. LeBron James leads at 63, nearly double Kevin Durant's 35, the next-highest total on the list. Jalen Brunson closes it out at 8. Every player here has made at least three All-Star teams.
+
+The ranking reflects accolades accumulated over an entire career. Six of these fifteen players, including LeBron, Curry, and Durant, also show up in the overpaid chart above: a résumé built over a decade gets priced into a contract long before this year's stat line is final.
 
 ## Positional Salary & Value Disparities
 
