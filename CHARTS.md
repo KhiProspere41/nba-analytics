@@ -6,7 +6,7 @@ What each chart in this project shows, with the real numbers behind it. Regenera
 
 ![Salary vs Performance](examples/salary_vs_performance.png)
 
-Each dot is one of the 80 highest-scoring players in the 2025-26 season. Salary runs along the x-axis, EFF along the y-axis, dot size tracks points per game, and color marks position: guard, forward, or center.
+Each marker is one of the 80 highest-scoring players in the 2025-26 season. Salary runs along the x-axis, EFF along the y-axis, marker size tracks points per game, and both color and shape mark position: circles for guards, triangles for forwards, squares for centers.
 
 The two variables correlate at 0.62, real but loose. Nikola Jokić sits at the top: a $55.2M salary paired with an EFF of 41.0, the highest mark here. Victor Wembanyama, three seasons into a rookie-scale deal worth $13.4M, posts a 31.8, closer to Jokić's number than to what his own paycheck would predict. Dots thin out below $10M but don't disappear. Jalen Duren earns $6.5M and posts a 26.2, a better mark than half of the ten highest-paid players on this chart.
 

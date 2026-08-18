@@ -13,11 +13,15 @@ plt.rcParams["savefig.dpi"] = 150
 plt.rcParams["font.size"] = 10
 
 
+POSITION_MARKERS = {"G": "o", "F": "^", "C": "s"}  # circle, triangle, square
+
+
 def plot_salary_vs_performance(df, out_dir: Path = OUTPUT_DIR):
     fig, ax = plt.subplots(figsize=(9, 6))
     sns.scatterplot(
-        data=df, x="SALARY", y="EFF", hue="POSITION", size="PTS",
-        sizes=(30, 220), alpha=0.75, ax=ax,
+        data=df, x="SALARY", y="EFF", hue="POSITION", style="POSITION",
+        markers=POSITION_MARKERS, size="PTS", sizes=(30, 220),
+        alpha=0.8, edgecolor="black", linewidth=0.4, ax=ax,
     )
     ax.set_xlabel("Salary ($)")
     ax.set_ylabel("Efficiency (EFF, per game)")
