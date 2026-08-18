@@ -4,7 +4,7 @@
 Usage:
     python main.py                    # bundled real 2024-25 season data (offline)
     python main.py --live-data        # fetch current stats from the NBA Stats API instead
-    python main.py --top-n 100        # narrow to the top 100 scorers instead of 200
+    python main.py --top-n 200        # widen to the top 200 scorers instead of 80
 """
 
 import argparse
@@ -26,8 +26,8 @@ def parse_args():
         help="Season to fetch in live mode, e.g. 2024-25 (default: 2024-25).",
     )
     parser.add_argument(
-        "--top-n", type=int, default=200,
-        help="Keep only the top N players by total season points (default: 200).",
+        "--top-n", type=int, default=80,
+        help="Keep only the top N players by total season points (default: 80).",
     )
     parser.add_argument(
         "--skip-viz", action="store_true",

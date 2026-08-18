@@ -12,7 +12,7 @@ correlation analysis, and produces four charts.
 ```bash
 pip install -r requirements.txt
 
-# Bundled real 2024-25 season data, offline, top 200 scorers
+# Bundled real 2024-25 season data, offline, top 80 scorers
 python main.py --skip-viz
 
 # Full run with charts
@@ -25,7 +25,7 @@ python main.py --live-data
 Other options:
 
 ```bash
-python main.py --top-n 100          # narrow to the top 100 scorers instead of 200
+python main.py --top-n 200          # widen to the top 200 scorers instead of 80
 python main.py --live-data --season 2023-24
 ```
 
@@ -47,7 +47,7 @@ Output lands in `output/`: `processed_player_data.csv` plus four PNG charts.
 
 1. **Aggregate** — box-score rows are grouped by player: games played, season-total
    points (used for ranking), and per-game averages for every stat.
-2. **Select top N** — `analysis.select_top_players()` keeps the top 200 players (`--top-n`
+2. **Select top N** — `analysis.select_top_players()` keeps the top 80 players (`--top-n`
    to change it) ranked by total season points, before the salary join.
 3. **Merge salary** — joined by player name, normalized to survive accents, periods, and
    suffixes (e.g. `Nikola Jokić` / `Alperen Şengün`, `A.J. Green` vs `AJ Green`, trailing
@@ -88,7 +88,7 @@ examples/            committed example charts from the bundled dataset
 
 ## Caveats
 
-- Only ~40% of the top 200 scorers have usable salary data (many well-known players show
+- Only ~56% of the top 80 scorers have usable salary data (many well-known players show
   `$0` in the source salary file and are dropped rather than guessed at) — the
   salary-linked analysis runs on that smaller, real subset.
 - Season averages blend regular-season and playoff games (some players show more than 82
