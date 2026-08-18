@@ -1,0 +1,575 @@
+Player Id,Player Name,2024/2025
+1,Stephen Curry,"$59,606,817 "
+2,John Wall,$0 
+3,Russell Westbrook,$0 
+4,LeBron James,$0 
+5,Kevin Durant,"$54,708,608 "
+6,Bradley Beal,"$53,666,270 "
+7,Paul George,$0 
+7,Kawhi Leonard,$0 
+7,Giannis Antetokounmpo,"$51,935,268 "
+7,Damian Lillard,"$58,545,211 "
+11,Klay Thompson,$0 
+12,Kyrie Irving,$0 
+13,Rudy Gobert,"$46,655,173 "
+14,Khris Middleton,$0 
+15,Anthony Davis,$0 
+16,Jimmy Butler,"$52,413,394 "
+17,Tobias Harris,$0 
+18,Kemba Walker,$0 
+19,Trae Young,"$45,999,660 "
+19,Zach LaVine,"$45,999,660 "
+19,Luka Doncic,"$45,999,660 "
+22,Ben Simmons,$0 
+22,Pascal Siakam,$0 
+24,Myles Turner,$0 
+25,Jrue Holiday,$0 
+26,Karl-Anthony Towns,"$54,054,000 "
+26,Devin Booker,"$54,054,000 "
+26,Kristaps Porzingis,$0 
+29,Joel Embiid,"$54,404,000 "
+29,Andrew Wiggins,"$28,223,215 "
+31,CJ McCollum,"$30,666,666 "
+32,Nikola Jokic,"$53,998,000 "
+33,James Harden,$0 
+34,Jamal Murray,$0 
+34,Brandon Ingram,$0 
+36,D'Angelo Russell,$0 
+37,Michael Porter,"$38,333,050 "
+37,Shai Gilgeous-Alexander,"$38,333,050 "
+37,Donovan Mitchell,"$37,096,620 "
+37,Deandre Ayton,"$35,550,814 "
+41,Kevin Love,$0 
+42,Jayson Tatum,"$37,096,620 "
+42,Bam Adebayo,"$37,096,620 "
+42,De'Aaron Fox,"$37,096,620 "
+45,Gordon Hayward,$0 
+46,Jaylen Brown,$0 
+47,Jaren Jackson Jr,"$23,413,395 "
+48,Chris Paul,$0 
+49,Kyle Lowry,$0 
+50,Jalen Brunson,"$24,960,001 "
+51,DeMar DeRozan,$0 
+52,Al Horford,$0 
+53,Draymond Green,$0 
+54,Julius Randle,"$29,462,400 "
+55,John Collins,"$26,580,000 "
+56,Mike Conley,$0 
+57,Malcolm Brogdon,$0 
+58,Anfernee Simons,"$27,678,571 "
+59,Nikola Vucevic,$0 
+60,Terry Rozier,"$26,643,031 "
+61,Fred VanVleet,$0 
+62,Buddy Hield,$0 
+63,Domantas Sabonis,$0 
+64,Jerami Grant,$0 
+65,Mikal Bridges,"$24,900,000 "
+66,Jarrett Allen,"$20,000,000 "
+67,Nicolas Batum,$0 
+68,Aaron Gordon,"$22,841,455 "
+69,Tim Hardaway Jr,$0 
+70,Eric Gordon,$0 
+71,Bojan Bogdanovic,$0 
+72,Lonzo Ball,$0 
+73,Spencer Dinwiddie,$0 
+74,Danilo Gallinari,$0 
+75,Caris LeVert,$0 
+76,Joe Harris,$0 
+77,Harrison Barnes,$0 
+78,Clint Capela,$0 
+79,Evan Fournier,$0 
+79,Bogdan Bogdanovic,"$16,020,000 "
+81,Steven Adams,$0 
+82,Jonathan Isaac,$0 
+83,OG Anunoby,$0 
+84,Gary Trent Jr,$0 
+85,Marcus Smart,"$21,336,856 "
+86,Derrick White,$0 
+87,Dejounte Murray,$0 
+88,Mitchell Robinson,"$12,954,546 "
+89,Duncan Robinson,"$19,888,000 "
+90,Norman Powell,"$20,482,758 "
+91,Collin Sexton,"$18,975,000 "
+92,Markelle Fultz,$0 
+93,Lauri Markkanen,$0 
+94,Marcus Morris,$0 
+95,Davis Bertans,$0 
+96,Jusuf Nurkic,"$19,375,000 "
+97,Malik Beasley,$0 
+98,Luguentz Dort,"$17,722,222 "
+99,Will Barton,$0 
+100,Tyus Jones,$0 
+101,Jonas Valanciunas,$0 
+102,Derrick Rose,$0 
+103,Kevin Huerter,"$17,991,071 "
+104,Christian Wood,$0 
+105,Wendell Carter,"$10,850,000 "
+106,Kentavious Caldwell-Pope,$0 
+107,Brook Lopez,$0 
+108,Patrick Beverley,$0 
+109,Doug McDermott,$0 
+110,Luke Kennard,$0 
+111,Zion Williamson,"$38,860,000 "
+112,Jordan Clarkson,$0 
+113,Gary Harris,$0 
+113,Kyle Kuzma,$0 
+115,Josh Hart,$0 
+116,Dorian Finney-Smith,"$15,378,480 "
+117,Kelly Olynyk,$0 
+118,Chris Boucher,$0 
+119,Kelly Oubre,$0 
+120,Marvin Bagley,$0 
+121,Robert Covington,$0 
+122,Josh Richardson,$0 
+123,Ja Morant,"$38,860,000 "
+124,Danny Green,$0 
+125,Devonte Graham,$0 
+126,Terrence Ross,$0 
+127,Reggie Jackson,$0 
+128,Dillon Brooks,$0 
+129,Richaun Holmes,$0 
+130,Dwight Powell,$0 
+131,Paolo Banchero,"$15,334,769 "
+132,RJ Barrett,"$27,705,357 "
+133,Bobby Portis,"$13,445,754 "
+134,DeAndre Jordan,$0 
+135,Anthony Edwards,$0 
+136,Robert Williams,"$13,285,713 "
+137,Cade Cunningham,"$18,123,052 "
+138,PJ Tucker,$0 
+139,Derrick Favors,$0 
+140,Mo Bamba,$0 
+141,Talen Horton-Tucker,$0 
+142,Jae Crowder,$0 
+143,Ivica Zubac,$0 
+144,Reggie Bullock,$0 
+144,Alec Burks,$0 
+146,Chet Holmgren,"$13,731,368 "
+147,De'Andre Hunter,"$23,303,571 "
+148,Larry Nance Jr,$0 
+149,James Wiseman,$0 
+150,Landry Shamet,"$11,750,000 "
+151,Malik Monk,$0 
+152,Jalen Green,"$16,290,377 "
+153,Jakob Poeltl,$0 
+154,Nerlens Noel,$0 
+155,Nicolas Claxton,$0 
+156,Dario Saric,$0 
+157,Royce O'Neale,$0 
+158,Monte Morris,$0 
+159,Mason Plumlee,$0 
+160,Alex Caruso,$0 
+161,Maxi Kleber,"$11,000,000 "
+162,Grayson Allen,$0 
+163,Darius Garland,"$38,860,000 "
+164,Jabari Smith,"$12,350,392 "
+165,Isaiah Hartenstein,$0 
+166,Kyle Anderson,$0 
+167,Victor Oladipo,$0 
+168,Daniel Theis,$0 
+169,LaMelo Ball,$0 
+170,Seth Curry,$0 
+171,Evan Mobley,"$14,730,686 "
+172,Gary Payton II,$0 
+173,Dewayne Dedmon,$0 
+174,De'Anthony Melton,$0 
+175,JaMychal Green,$0 
+176,TJ McConnell,$0 
+177,Keegan Murray,"$11,144,093 "
+178,Kevon Looney,$0 
+178,Thaddeus Young,$0 
+180,Delon Wright,$0 
+181,Patrick Williams,$0 
+182,Scottie Barnes,"$13,362,763 "
+183,Cedi Osman,$0 
+184,Coby White,$0 
+185,Zach Collins,$0 
+186,Taurean Prince,$0 
+187,Jaden Ivey,"$10,107,163 "
+188,Jae'Sean Tate,$0 
+189,Isaac Okoro,$0 
+190,Cody Martin,"$8,680,000 "
+191,Jalen Suggs,"$12,183,799 "
+192,Jaxson Hayes,$0 
+193,Khem Birch,$0 
+194,Bennedict Mathurin,"$9,187,573 "
+195,Patrick Mills,$0 
+195,Bruce Brown,$0 
+195,Caleb Martin,$0 
+195,Lonnie Walker,$0 
+195,Joe Ingles,$0 
+200,Onyeka Okongwu,$0 
+201,Josh Giddey,"$11,142,057 "
+202,Rui Hachimura,$0 
+203,Rudy Gay,$0 
+204,Jevon Carter,$0 
+205,Shaedon Sharpe,"$8,399,983 "
+206,Cameron Payne,$0 
+206,Otto Porter,$0 
+208,Justin Holiday,$0 
+209,Cam Reddish,$0 
+210,Cameron Johnson,$0 
+211,Ricky Rubio,$0 
+212,Killian Hayes,$0 
+213,PJ Washington,$0 
+214,Jonathan Kuminga,"$10,240,287 "
+215,Pat Connaughton,"$9,423,869 "
+216,Tyler Herro,"$31,000,000 "
+217,Romeo Langford,$0 
+218,Dyson Daniels,"$7,707,709 "
+219,JaVale McGee,$0 
+220,Goga Bitadze,$0 
+221,Obi Toppin,$0 
+222,Franz Wagner,"$9,445,560 "
+223,Kendrick Nunn,$0 
+224,Hamidou Diallo,$0 
+225,Cory Joseph,$0 
+225,Garrett Temple,$0 
+227,Torrey Craig,$0 
+228,Jeremy Sochan,"$7,096,231 "
+229,David Nwaba,$0 
+230,Nickeil Alexander-Walker,$0 
+231,Furkan Korkmaz,$0 
+232,Deni Avdija,$0 
+233,Davion Mitchell,"$8,741,210 "
+234,Johnny Davis,"$6,746,229 "
+235,Ty Jerome,$0 
+236,Ishmael Smith,$0 
+237,Jalen Smith,$0 
+238,Ziaire Williams,"$8,353,152 "
+239,Ousmane Dieng,"$6,670,882 "
+240,Moe Harkless,$0 
+241,Donte DiVincenzo,$0 
+241,Jeff Green,$0 
+243,Devin Vassell,$0 
+244,Matisse Thybulle,$0 
+245,Jarred Vanderbilt,$0 
+246,James Bouknight,"$8,302,295 "
+247,Brandon Clarke,"$12,500,000 "
+248,Jalen Williams,"$6,580,997 "
+249,Grant Williams,$0 
+250,Darius Bazley,$0 
+251,Tyrese Haliburton,$0 
+252,Nassir Little,"$7,250,000 "
+253,Josh Primo,$0 
+254,Jalen Duren,"$6,483,144 "
+255,Gorgui Dieng,$0 
+256,Danuel House,$0 
+257,Boban Marjanovic,$0 
+258,Justise Winslow,$0 
+259,Dylan Windler,$0 
+260,Stanley Johnson,$0 
+261,Kira Lewis,$0 
+262,George Hill,$0 
+262,Terence Davis,$0 
+264,Chris Duarte,"$8,151,081 "
+265,Alex Len,$0 
+266,Ochai Agbaji,"$6,383,525 "
+267,Jordan Poole,"$32,348,215 "
+268,Keldon Johnson,"$17,500,000 "
+269,Sviatoslav Mykhailiuk,$0 
+270,James Johnson,$0 
+271,Aaron Nesmith,$0 
+272,Moses Moody,"$8,072,347 "
+273,Mark Williams,"$6,276,531 "
+274,Cole Anthony,$0 
+275,Corey Kispert,"$7,976,830 "
+276,AJ Griffin,"$5,967,137 "
+277,Goran Dragic,$0 
+278,Mike Muscala,$0 
+279,Georges Niang,$0 
+280,Isaiah Stewart,$0 
+280,Chuma Okeke,$0 
+282,Trey Burke,$0 
+283,Amir Coffey,$0 
+284,Alperen Sengun,"$7,621,638 "
+285,Tari Eason,"$5,675,766 "
+286,Aleksej Pokusevski,$0 
+287,Kevin Porter,"$15,860,000 "
+288,Trey Murphy,"$7,285,713 "
+289,Simone Fontecchio,$0 
+290,Andre Drummond,$0 
+290,Derrick Jones,$0 
+292,Dalen Terry,"$5,399,118 "
+293,Sterling Brown,$0 
+294,Josh Green,$0 
+295,Jake LaRavia,"$5,163,127 "
+296,Tre Mann,"$6,964,982 "
+297,Kevin Knox,$0 
+298,Saddiq Bey,$0 
+299,Malaki Branham,"$4,962,033 "
+300,Joe Wieskamp,$0 
+301,Kai Jones,"$6,693,266 "
+302,Blake Griffin,$0 
+302,Robin Lopez,$0 
+302,Markieff Morris,$0 
+302,Andre Iguodala,$0 
+302,Serge Ibaka,$0 
+302,Udonis Haslem,$0 
+302,Wesley Matthews,$0 
+302,Austin Rivers,$0 
+302,Bismack Biyombo,$0 
+302,Taj Gibson,$0 
+312,RJ Hampton,$0 
+313,Andrew Nicholson,$0 
+314,Precious Achiuwa,$0 
+315,Christian Braun,"$4,921,797 "
+316,Jordan Nwora,$0 
+317,Jalen Johnson,"$6,464,127 "
+318,Tyrese Maxey,$0 
+319,Bruno Fernando,"$2,853,260 "
+320,Walker Kessler,"$4,878,938 "
+321,Keon Johnson,"$6,447,453 "
+322,Charles Bassey,"$2,500,000 "
+323,Dennis Schroeder,$0 
+324,TJ Warren,$0 
+324,Matthew Dellavedova,$0 
+326,Trey Lyles,$0 
+327,Zeke Nnaji,$0 
+328,David Roddy,"$4,831,766 "
+329,Isaiah Jackson,"$6,422,431 "
+330,MarJon Beauchamp,"$4,781,276 "
+331,Usman Garuba,"$6,391,109 "
+332,Montrezl Harrell,$0 
+332,Raul Neto,$0 
+332,Frank Kaminsky,$0 
+335,Willy Hernangomez,$0 
+336,Theo Maledon,$0 
+337,Blake Wesley,"$4,726,328 "
+338,Josh Christopher,"$6,354,751 "
+339,Isaiah Roby,$0 
+340,Lindy Waters III,$0 
+341,Immanuel Quickley,$0 
+342,Wendell Moore,"$4,574,283 "
+343,John Konchar,"$6,165,000 "
+344,Damian Jones,$0 
+344,Rodney McGruder,$0 
+344,Bryn Forbes,$0 
+344,Juan Hernangomez,$0 
+348,Quentin Grimes,"$6,311,825 "
+349,Saben Lee,$0 
+350,Andrew Nembhard,"$2,187,451 "
+351,Nikola Jovic,"$4,445,417 "
+352,Payton Pritchard,$0 
+353,Vlatko Cancar,$0 
+354,Patrick Baldwin,"$4,420,156 "
+355,TyTy Washington,"$4,388,099 "
+356,Bones Hyland,"$6,137,856 "
+357,Bol Bol,$0 
+358,Peyton Watson,"$4,356,476 "
+359,Marquese Chriss,$0 
+360,Udoka Azubuike,$0 
+361,Jaden McDaniels,$0 
+362,Jordan McLaughlin,$0 
+363,Malachi Flynn,$0 
+364,Cam Thomas,"$5,993,172 "
+365,Luke Kornet,$0 
+365,Dennis Smith,$0 
+365,Damion Lee,$0 
+365,Juan Toscano-Anderson,$0 
+369,Desmond Bane,$0 
+370,Jaden Springer,"$5,987,361 "
+371,Day'Ron Sharpe,"$5,983,683 "
+372,Santiago Aldama,"$5,940,797 "
+373,Tony Bradley,$0 
+373,Frank Ntilikina,$0 
+375,Kenrich Williams,"$7,163,000 "
+375,Garrison Mathews,$0 
+375,Jaylin Williams,"$2,187,699 "
+375,Caleb Houstan,"$2,187,451 "
+375,Jeremiah Robinson-Earl,$0 
+380,Shake Milton,$0 
+381,Edmond Sumner,$0 
+381,Aaron Holiday,$0 
+381,Yuta Watanabe,$0 
+381,Theo Pinson,$0 
+381,Thomas Bryant,$0 
+381,Troy Brown,$0 
+381,Josh Okogie,$0 
+381,Drew Eubanks,$0 
+389,Daniel Gafford,"$14,386,320 "
+389,Terance Mann,$0 
+389,Dean Wade,"$6,623,456 "
+389,Jaylen Nowell,$0 
+389,Naz Reid,$0 
+389,Jalen McDaniels,$0 
+395,Chimezie Metu,$0 
+396,Davon Reed,$0 
+396,KZ Okpala,$0 
+398,Killian Tillie,$0 
+399,Vernon Carey,$0 
+400,Wenyen Gabriel,$0 
+400,Thanasis Antetokounmpo,$0 
+400,Moritz Wagner,$0 
+400,Keita Bates-Diop,$0 
+404,Oshae Brissett,$0 
+405,Isaiah Joe,$0 
+405,Anthony Gill,$0 
+405,Nathan Knight,$0 
+405,Justin Jackson,$0 
+405,Ryan Arcidiacono,$0 
+410,Javonte Green,$0 
+410,Max Strus,$0 
+410,Gabe Vincent,$0 
+413,Herb Jones,$0 
+414,KJ Martin,$0 
+414,Nick Richards,"$5,000,000 "
+414,Lamar Stevens,$0 
+414,Tyrell Terry,$0 
+414,Xavier Tillman,$0 
+414,Naji Marshall,$0 
+414,Paul Reed,$0 
+414,Tre Jones,$0 
+422,Haywood Highsmith,$0 
+422,Omer Yurtseven,$0 
+424,Leandro Bolmaro,$0 
+425,Terry Taylor,$0 
+426,Jared Butler,$0 
+427,Jericho Sims,$0 
+428,Sam Hauser,$0 
+428,Kessler Edwards,$0 
+430,Isaiah Todd,$0 
+431,Vit Krejci,$0 
+431,JT Thor,$0 
+431,Marko Simonovic,$0 
+431,BJ Boston,$0 
+431,Jason Preston,$0 
+431,Aaron Wiggins,$0 
+431,Trendon Watford,$0 
+431,Ayo Dosunmu,$0 
+431,Isaiah Livers,$0 
+431,Daishen Nix,$0 
+431,Austin Reaves,$0 
+431,Jose Alvarado,$0 
+431,Miles McBride,$0 
+431,Jock Landale,$0 
+431,Greg Brown,$0 
+431,Dalano Banton,$0 
+447,Kenneth Lofton,"$2,187,699 "
+448,Christian Koloko,$0 
+449,Bryce McGowens,"$2,187,699 "
+450,Eric Bledsoe,$0 
+451,Jordan Goodwin,$0 
+452,Kennedy Chandler,"$2,187,699 "
+453,Noah Vonleh,$0 
+454,Sandro Mamukelashvili,$0 
+455,Sam Merrill,$0 
+456,Zhaire Smith,$0 
+457,Tyrese Martin,$0 
+457,Jaden Hardy,$0 
+457,Ryan Rollins,$0 
+457,Max Christie,$0 
+457,Josh Minott,"$2,187,699 "
+457,Jabari Walker,$0 
+463,Eugene Omoruyi,$0 
+464,Kris Dunn,$0 
+465,Kyle Singler,$0 
+466,Ishmail Wainright,$0 
+467,Admiral Schofield,$0 
+468,Justin Champagnie,$0 
+469,Trevelin Queen,$0 
+470,Moses Brown,$0 
+471,Matt Ryan,$0 
+472,DaQuan Jeffries,$0 
+473,PJ Dozier,$0 
+474,Cody Zeller,$0 
+475,Meyers Leonard,$0 
+476,Nik Stauskas,$0 
+477,Anthony Lamb,$0 
+478,Michael Carter-Williams,$0 
+479,DJ Augustin,$0 
+480,Duane Washington Jr,$0 
+481,Carlik Jones,$0 
+482,Juwan Morgan,$0 
+483,Malik Fitts,$0 
+484,Luka Samanic,$0 
+485,David Duke,$0 
+486,Trevor Keels,$0 
+487,Dereon Seabron,$0 
+488,Cole Swider,$0 
+488,Vince Williams Jr,$0 
+488,EJ Liddell,$0 
+488,Kevon Harris,$0 
+488,Micah Potter,$0 
+488,Trent Forrest,$0 
+488,JD Davison,$0 
+488,Mfiondu Kabengele,$0 
+488,Malcolm Hill,$0 
+488,Mamadi Diakite,$0 
+488,Isaiah Mobley,$0 
+488,McKinley Wright,$0 
+488,Collin Gillespie,$0 
+488,Jack White,$0 
+488,Buddy Boeheim,$0 
+488,Darius Days,$0 
+488,Trevor Hudgins,$0 
+488,Kendall Brown,$0 
+488,Moussa Diabate,$0 
+488,Scottie Pippen Jr,$0 
+488,Jamal Cain,$0 
+488,AJ Green,$0 
+488,Luka Garza,$0 
+488,Keon Ellis,$0 
+488,Neemias Queta,$0 
+488,Dominick Barlow,$0 
+488,Julian Champagnie,$0 
+488,Jeff Dowtin,$0 
+488,Ron Harper Jr,$0 
+488,Johnny Juzang,$0 
+518,John Butler,$0 
+519,Chima Moneke,$0 
+520,Facundo Campazzo,$0 
+521,Orlando Robinson,$0 
+522,Dru Smith,$0 
+523,AJ Lawson,$0 
+524,Jared Rhoden,$0 
+524,Louis King,$0 
+526,Robert Woodard,$0 
+527,Didi Louzada,"$268,032 "
+528,Jarrett Culver,$0 
+529,Olivier Sarr,$0 
+530,Alondes Williams,$0 
+531,DJ Wilson,$0 
+532,Donovan Williams,$0 
+533,Quenton Jackson,$0 
+534,Chris Silva,$0 
+535,Tyler Dorsey,$0 
+535,Braxton Key,$0 
+537,Jordan Hall,$0 
+538,Alize Johnson,$0 
+539,Kostas Antetokounmpo,$0 
+540,Devon Dotson,$0 
+541,Mac McClung,$0 
+542,Willie Cauley-Stein,$0 
+543,Nate Darling,$0 
+544,Xavier Cooks,"$2,187,451 "
+544,Keaton Wallace,$0 
+546,Shaquille Harrison,$0 
+547,Feron Hunt,$0 
+548,Lester Quinones,$0 
+549,Troy Williams,$0 
+550,Xavier Moon,$0 
+550,Jamaree Bouyea,$0 
+550,Jay Huff,$0 
+553,Skylar Mays,$0 
+554,Frank Jackson,$0 
+555,Michael Foster,$0 
+556,Deonte Burton,$0 
+556,Jarrell Brantley,$0 
+558,Xavier Sneed,$0 
+559,Justin Lewis,$0 
+560,Lindell Wigginton,$0 
+561,Jordan Schakel,$0 
+562,Demetrius Jackson,$0 
+563,Stanley Umude,$0 
+564,Jeenathan Williams,$0 
+565,DJ Steward,$0 
+565,Armoni Brooks,$0 
+567,Jay Scrubb,$0 
+568,Justin Minaya,$0 
+569,Kobi Simmons,$0 
+570,Gabe York,$0 
+571,Ibou Badji,$0 
+572,Tristan Thompson,$0 
+573,RaiQuan Gray,$0 
+573,Jacob Gilyard,$0 

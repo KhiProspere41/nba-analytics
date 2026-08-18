@@ -2,9 +2,9 @@
 """NBA Player Performance Analytics — entry point.
 
 Usage:
-    python main.py --sample-data --skip-viz   # instant offline test
-    python main.py --live-data                # fetch real current-season stats
-    python main.py --live-data --season 2022-23
+    python main.py                    # bundled real 2024-25 season data (offline)
+    python main.py --live-data        # fetch current stats from the NBA Stats API instead
+    python main.py --top-n 100        # narrow to the top 100 scorers instead of 200
 """
 
 import argparse
@@ -16,18 +16,18 @@ import visualizations
 
 def parse_args():
     parser = argparse.ArgumentParser(description="NBA salary vs. performance analytics")
-    source = parser.add_mutually_exclusive_group()
-    source.add_argument(
+    parser.add_argument(
         "--live-data", action="store_true",
-        help="Fetch live stats from the official NBA Stats API (requires network access).",
-    )
-    source.add_argument(
-        "--sample-data", action="store_true",
-        help="Use the bundled sample dataset (default, no network required).",
+        help="Fetch live stats from the official NBA Stats API instead of the bundled "
+             "2024-25 season data (requires network access).",
     )
     parser.add_argument(
-        "--season", default="2023-24",
-        help="Season to fetch in live mode, e.g. 2023-24 (default: 2023-24).",
+        "--season", default="2024-25",
+        help="Season to fetch in live mode, e.g. 2024-25 (default: 2024-25).",
+    )
+    parser.add_argument(
+        "--top-n", type=int, default=200,
+        help="Keep only the top N players by total season points (default: 200).",
     )
     parser.add_argument(
         "--skip-viz", action="store_true",
@@ -46,11 +46,17 @@ def main():
             print(f"  Retrieved {len(stats_df)} players from the NBA Stats API.")
         except analysis.LiveDataUnavailable as exc:
             print(f"  Live fetch failed ({exc})")
-            print("  Falling back to bundled sample data.")
-            stats_df = analysis.load_sample_stats()
-    else:
-        print("Using bundled sample dataset...")
-        stats_df = analysis.load_sample_stats()
+            print("  Falling back to the bundled 2024-25 season data.")
+            args.live_data = False
+
+    if not args.live_data:
+        print("Loading bundled 2024-25 season game logs...")
+        logs = analysis.load_game_logs()
+        stats_df = analysis.aggregate_season_stats(logs)
+        print(f"  Aggregated {len(stats_df)} players from {len(logs)} game log rows.")
+
+    print(f"Selecting top {args.top_n} players by total season points...")
+    stats_df = analysis.select_top_players(stats_df, n=args.top_n)
 
     salary_df = analysis.load_salary_data()
 
@@ -59,13 +65,14 @@ def main():
     if merged.empty:
         print("No players matched between stats and salary data. Aborting.", file=sys.stderr)
         sys.exit(1)
+    print(f"  {len(merged)} of {len(stats_df)} top players had usable salary data.")
 
     print("Computing advanced metrics (TS%, EFF, Value Index)...")
     df = analysis.compute_advanced_metrics(merged)
 
     corr_df = analysis.correlation_matrix(df)
     value_df = analysis.top_value_players(df)
-    position_df = analysis.position_summary(df)
+    team_df = analysis.team_summary(df)
 
     out_path = analysis.save_processed_data(df)
     print(f"Processed data saved to {out_path}")
@@ -78,7 +85,7 @@ def main():
 
     if not args.skip_viz:
         print("\nGenerating charts...")
-        paths = visualizations.generate_all_charts(df, corr_df, value_df, position_df)
+        paths = visualizations.generate_all_charts(df, corr_df, value_df, team_df)
         for p in paths:
             print(f"  Saved {p}")
     else:
