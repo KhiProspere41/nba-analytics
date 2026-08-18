@@ -96,6 +96,11 @@ examples/            committed example charts from the bundled dataset
 - Positions are hand-assigned (see Data sources above) rather than pulled from a live
   feed, since the traditional 5-position breakdown doesn't exist in official NBA data
   anymore.
+- The "most overpaid" list (`bottom_value_players.png`) is dominated by max-contract
+  superstars (Curry, Booker, LeBron, Durant, etc.) — that's expected, not a bug. Value
+  Index measures production *per salary dollar*, and at the $50M+ tier even an All-NBA
+  season can't keep pace with the denominator. Read it as "lowest surplus value relative
+  to cost," not "worst players."
 - The bundled box score log is a point-in-time snapshot — it won't include games played
   after it was pulled. Use `--live-data` for the latest numbers.
 - The NBA Stats API is undocumented and can change or rate-limit without notice; that's
