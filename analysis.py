@@ -1,7 +1,6 @@
-"""NBA player performance analytics: real 2024-25 season data + salary merge."""
+"""NBA player performance analytics: live 2025-26 season stats + real salary/position data."""
 
 import re
-import time
 import unicodedata
 from pathlib import Path
 
@@ -10,13 +9,11 @@ import pandas as pd
 DATA_DIR = Path(__file__).parent / "data"
 OUTPUT_DIR = Path(__file__).parent / "output"
 
-GAME_LOG_PATH = DATA_DIR / "nba_dailyleaders_2024_25.csv"
-SALARY_PATH = DATA_DIR / "nba_salaries_2024_25.csv"
+SALARY_PATH = DATA_DIR / "nba_salaries_2025_26.csv"
 
-# The game log has no rebounds column, so metrics below deliberately omit REB.
 STAT_COLUMNS = [
-    "PLAYER", "TEAM", "GP", "MIN", "PTS", "AST", "STL", "BLK", "TOV",
-    "FGM", "FGA", "FG3M", "FG3A", "FTM", "FTA",
+    "PLAYER", "TEAM", "GP", "MIN", "PTS", "REB", "AST",
+    "STL", "BLK", "TOV", "FGM", "FGA", "FG3M", "FG3A", "FTM", "FTA",
 ]
 
 
@@ -32,83 +29,11 @@ def _name_key(name: str) -> str:
     return re.sub(r"\s+", " ", name)
 
 
-def _parse_minutes(mp: str) -> float:
-    minutes, seconds = mp.split(":")
-    return int(minutes) + int(seconds) / 60
+def fetch_live_stats(season: str = "2025-26", min_games: int = 10) -> pd.DataFrame:
+    """Fetch player per-game stats for a season from the official NBA Stats API.
 
-
-def load_game_logs(path: Path = GAME_LOG_PATH) -> pd.DataFrame:
-    """Load the per-game box score log (one row per player per game)."""
-    df = pd.read_csv(path)
-    df["MIN"] = df["MP"].map(_parse_minutes)
-    return df.rename(columns={"3P": "FG3M", "3PA": "FG3A", "FT": "FTM"})
-
-
-def aggregate_season_stats(logs: pd.DataFrame) -> pd.DataFrame:
-    """Collapse per-game rows into one season-average row per player."""
-    grouped = logs.groupby("Player")
-    agg = grouped.agg(
-        GP=("PTS", "size"),
-        TOTAL_PTS=("PTS", "sum"),
-        TEAM=("Tm", lambda s: s.mode().iat[0]),
-        MIN=("MIN", "mean"),
-        PTS=("PTS", "mean"),
-        AST=("AST", "mean"),
-        STL=("STL", "mean"),
-        BLK=("BLK", "mean"),
-        TOV=("TOV", "mean"),
-        FGM=("FG", "mean"),
-        FGA=("FGA", "mean"),
-        FG3M=("FG3M", "mean"),
-        FG3A=("FG3A", "mean"),
-        FTM=("FTM", "mean"),
-        FTA=("FTA", "mean"),
-    ).reset_index().rename(columns={"Player": "PLAYER"})
-
-    round_cols = ["MIN", "PTS", "AST", "STL", "BLK", "TOV", "FGM", "FGA", "FG3M", "FG3A", "FTM", "FTA"]
-    agg[round_cols] = agg[round_cols].round(1)
-    return agg
-
-
-def select_top_players(df: pd.DataFrame, n: int = 200, by: str = "TOTAL_PTS") -> pd.DataFrame:
-    """Keep only the top-n players ranked by total season scoring output."""
-    return df.nlargest(n, by).reset_index(drop=True)
-
-
-def load_salary_data(path: Path = SALARY_PATH) -> pd.DataFrame:
-    """Load the salary table. Rows with $0 are treated as missing (stale/unreported
-    contract data, not an actual $0 salary) and dropped."""
-    df = pd.read_csv(path)
-    salary_col = [c for c in df.columns if "2024" in c][0]
-    df["SALARY"] = (
-        df[salary_col].astype(str).str.replace(r"[$,]", "", regex=True).str.strip().astype(float)
-    )
-    df = df.rename(columns={"Player Name": "PLAYER"})[["PLAYER", "SALARY"]]
-    df = df[df["SALARY"] > 0]
-    return df.sort_values("SALARY", ascending=False).drop_duplicates("PLAYER").reset_index(drop=True)
-
-
-def merge_with_salary(stats_df: pd.DataFrame, salary_df: pd.DataFrame) -> pd.DataFrame:
-    """Join stats with salary data, matching names loosely (accents/punctuation/suffixes)."""
-    stats_df = stats_df.copy()
-    salary_df = salary_df.copy()
-    stats_df["_key"] = stats_df["PLAYER"].map(_name_key)
-    salary_df["_key"] = salary_df["PLAYER"].map(_name_key)
-
-    merged = stats_df.merge(
-        salary_df[["_key", "SALARY"]], on="_key", how="inner"
-    ).drop(columns="_key")
-
-    unmatched = len(stats_df) - len(merged)
-    if unmatched:
-        print(f"  Note: {unmatched} players had no valid salary match (missing or $0) and were dropped.")
-    return merged
-
-
-def fetch_live_stats(season: str = "2024-25", min_games: int = 20) -> pd.DataFrame:
-    """Fetch current player per-game stats from the official NBA Stats API.
-
-    Requires network access. Used as an alternative to the bundled local season data.
+    This is the only stats source in this pipeline — no local box score file is
+    bundled for 2025-26, so a network call is required.
     """
     try:
         from nba_api.stats.endpoints import leaguedashplayerstats
@@ -134,18 +59,43 @@ def fetch_live_stats(season: str = "2024-25", min_games: int = 20) -> pd.DataFra
     return stats[STAT_COLUMNS + ["TOTAL_PTS"]].reset_index(drop=True)
 
 
-def compute_advanced_metrics(df: pd.DataFrame) -> pd.DataFrame:
-    """Add True Shooting %, a simplified efficiency score, and a Value Index.
+def select_top_players(df: pd.DataFrame, n: int = 80, by: str = "TOTAL_PTS") -> pd.DataFrame:
+    """Keep only the top-n players ranked by total season points."""
+    return df.nlargest(n, by).reset_index(drop=True)
 
-    EFF intentionally omits rebounds — the source game log doesn't include them.
-    """
+
+def load_salary_data(path: Path = SALARY_PATH) -> pd.DataFrame:
+    """Load real 2025-26 salary + position data (parsed from a text export)."""
+    df = pd.read_csv(path)
+    return df[df["SALARY"] > 0].drop_duplicates("PLAYER").reset_index(drop=True)
+
+
+def merge_with_salary(stats_df: pd.DataFrame, salary_df: pd.DataFrame) -> pd.DataFrame:
+    """Join stats with salary/position data, matching names loosely (accents/punctuation/suffixes)."""
+    stats_df = stats_df.copy()
+    salary_df = salary_df.copy()
+    stats_df["_key"] = stats_df["PLAYER"].map(_name_key)
+    salary_df["_key"] = salary_df["PLAYER"].map(_name_key)
+
+    merged = stats_df.merge(
+        salary_df[["_key", "SALARY", "POSITION"]], on="_key", how="inner"
+    ).drop(columns="_key")
+
+    unmatched = len(stats_df) - len(merged)
+    if unmatched:
+        print(f"  Note: {unmatched} players had no salary match and were dropped.")
+    return merged
+
+
+def compute_advanced_metrics(df: pd.DataFrame) -> pd.DataFrame:
+    """Add True Shooting %, a simplified efficiency score, and a Value Index."""
     df = df.copy()
 
     denom = 2 * (df["FGA"] + 0.44 * df["FTA"])
     df["TS_PCT"] = (df["PTS"] / denom.replace(0, pd.NA) * 100).round(1)
 
     df["EFF"] = (
-        df["PTS"] + df["AST"] + df["STL"] + df["BLK"]
+        df["PTS"] + df["REB"] + df["AST"] + df["STL"] + df["BLK"]
         - (df["FGA"] - df["FGM"])
         - (df["FTA"] - df["FTM"])
         - df["TOV"]
@@ -158,19 +108,19 @@ def compute_advanced_metrics(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def correlation_matrix(df: pd.DataFrame) -> pd.DataFrame:
-    cols = ["SALARY", "PTS", "AST", "EFF", "TS_PCT", "MIN"]
+    cols = ["SALARY", "PTS", "REB", "AST", "EFF", "TS_PCT", "MIN"]
     return df[cols].corr().round(3)
 
 
 def top_value_players(df: pd.DataFrame, n: int = 15) -> pd.DataFrame:
     return df.nlargest(n, "VALUE_INDEX")[
-        ["PLAYER", "TEAM", "SALARY", "PTS", "EFF", "VALUE_INDEX"]
+        ["PLAYER", "TEAM", "POSITION", "SALARY", "PTS", "EFF", "VALUE_INDEX"]
     ].reset_index(drop=True)
 
 
-def team_summary(df: pd.DataFrame) -> pd.DataFrame:
+def position_summary(df: pd.DataFrame) -> pd.DataFrame:
     return (
-        df.groupby("TEAM")
+        df.groupby("POSITION")
         .agg(
             players=("PLAYER", "count"),
             avg_salary=("SALARY", "mean"),
