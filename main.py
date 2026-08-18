@@ -67,6 +67,9 @@ def main():
         sys.exit(1)
     print(f"  {len(merged)} of {len(stats_df)} top players had usable salary data.")
 
+    awards_df = analysis.load_awards_data()
+    merged = analysis.merge_with_awards(merged, awards_df)
+
     print("Computing advanced metrics (TS%, EFF, Value Index)...")
     df = analysis.compute_advanced_metrics(merged)
 

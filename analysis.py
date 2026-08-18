@@ -11,6 +11,12 @@ OUTPUT_DIR = Path(__file__).parent / "output"
 
 GAME_LOG_PATH = DATA_DIR / "nba_dailyleaders_2025_26.csv"
 SALARY_PATH = DATA_DIR / "nba_salaries_2025_26.csv"
+AWARDS_PATH = DATA_DIR / "nba_player_awards.csv"
+
+AWARD_COLUMNS = [
+    "MVP", "DPOY", "ROY", "MIP", "FINALS_MVP", "CHAMPION",
+    "ALL_STAR", "ALL_NBA", "ALL_DEFENSIVE", "ALL_ROOKIE",
+]
 
 STAT_COLUMNS = [
     "PLAYER", "TEAM", "GP", "MIN", "PTS", "REB", "AST",
@@ -120,6 +126,30 @@ def merge_with_salary(stats_df: pd.DataFrame, salary_df: pd.DataFrame) -> pd.Dat
     return merged
 
 
+def load_awards_data(path: Path = AWARDS_PATH) -> pd.DataFrame:
+    """Load career award counts (MVP, All-Star, All-NBA, etc.) per player."""
+    return pd.read_csv(path)
+
+
+def merge_with_awards(df: pd.DataFrame, awards_df: pd.DataFrame) -> pd.DataFrame:
+    """Left-join career award counts onto the stats/salary data, matching names loosely.
+
+    Unlike the salary join, a missing match here means "no awards on record," not
+    missing data — so unmatched players are kept with all award counts at 0 rather
+    than dropped.
+    """
+    df = df.copy()
+    awards_df = awards_df.copy()
+    df["_key"] = df["PLAYER"].map(_name_key)
+    awards_df["_key"] = awards_df["PLAYER"].map(_name_key)
+
+    merged = df.merge(
+        awards_df[["_key", *AWARD_COLUMNS, "MAJOR_AWARDS"]], on="_key", how="left"
+    ).drop(columns="_key")
+    merged[[*AWARD_COLUMNS, "MAJOR_AWARDS"]] = merged[[*AWARD_COLUMNS, "MAJOR_AWARDS"]].fillna(0).astype(int)
+    return merged
+
+
 def compute_advanced_metrics(df: pd.DataFrame) -> pd.DataFrame:
     """Add True Shooting %, a simplified efficiency score, and a Value Index."""
     df = df.copy()
@@ -141,21 +171,21 @@ def compute_advanced_metrics(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def correlation_matrix(df: pd.DataFrame) -> pd.DataFrame:
-    cols = ["SALARY", "PTS", "REB", "AST", "EFF", "TS_PCT", "MIN"]
+    cols = ["SALARY", "PTS", "REB", "AST", "EFF", "TS_PCT", "MIN", "MAJOR_AWARDS"]
     return df[cols].corr().round(3)
 
 
 def top_value_players(df: pd.DataFrame, n: int = 15) -> pd.DataFrame:
     """Players producing the most per salary dollar (best value)."""
     return df.nlargest(n, "VALUE_INDEX")[
-        ["PLAYER", "TEAM", "POSITION", "SALARY", "PTS", "EFF", "VALUE_INDEX"]
+        ["PLAYER", "TEAM", "POSITION", "SALARY", "PTS", "EFF", "VALUE_INDEX", "MAJOR_AWARDS"]
     ].reset_index(drop=True)
 
 
 def bottom_value_players(df: pd.DataFrame, n: int = 15) -> pd.DataFrame:
     """Players producing the least per salary dollar (worst value / most overpaid)."""
     return df.nsmallest(n, "VALUE_INDEX")[
-        ["PLAYER", "TEAM", "POSITION", "SALARY", "PTS", "EFF", "VALUE_INDEX"]
+        ["PLAYER", "TEAM", "POSITION", "SALARY", "PTS", "EFF", "VALUE_INDEX", "MAJOR_AWARDS"]
     ].reset_index(drop=True)
 
 

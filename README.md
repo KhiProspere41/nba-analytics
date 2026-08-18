@@ -46,6 +46,23 @@ Output lands in `output/`: `processed_player_data.csv` plus five PNG charts.
   classification — a handful of rows used the finer PG/SG/SF/PF labels (apparent
   data-entry inconsistencies on ESPN's end); those are normalized to G/F/C to match the
   rest.
+- **Awards** — [`data/nba_player_awards.csv`](data/nba_player_awards.csv): career award
+  counts (MVP, DPOY, ROY, Most Improved, Finals MVP, championships, All-Star, All-NBA,
+  All-Defensive, All-Rookie selections) for 474 of the 475 salaried players, pulled from
+  the NBA Stats API's `PlayerAwards` endpoint via `nba_api`. Regenerate it with
+  [`scripts/fetch_awards.py`](scripts/fetch_awards.py) (~475 requests, a few minutes). A
+  `MAJOR_AWARDS` column sums all of the above into one composite accolade count. One
+  player (a recent, obscure signing) had no matching ID in `nba_api`'s static player list
+  and is treated as having zero awards.
+  ⚠️ Matching a player name to an `nba_api` player ID must preserve suffixes exactly
+  (`"Gary Payton II"`, not `"Gary Payton"`) — `nba_api`'s static list spans all of NBA
+  history and includes real father/son pairs under the same base name (Gary Payton /
+  Gary Payton II, Larry Nance / Larry Nance Jr., Tim Hardaway / Tim Hardaway Jr.).
+  Stripping suffixes here, like `analysis._name_key` does for the salary/stats join,
+  silently collided active players with their retired, more decorated relatives on the
+  first pull of this data — Gary Payton II briefly showed his father's 9 All-Star nods,
+  9 All-Defensive selections, and 1996 DPOY. `scripts/fetch_awards.py` matches on exact
+  full names for this reason.
 
 ## How it works
 
@@ -56,14 +73,18 @@ Output lands in `output/`: `processed_player_data.csv` plus five PNG charts.
 3. **Merge salary** — joined by player name, normalized to survive accents, periods, and
    suffixes (e.g. `Nikola Jokić` vs `Nikola Jokic`, trailing `Jr.`/`III`). Players with no
    salary match are dropped and the count is reported.
-4. **Metrics** (`analysis.compute_advanced_metrics`):
+4. **Merge awards** — career award counts are left-joined the same way; unlike the salary
+   join, a non-match here just means zero career awards on record, so no players are
+   dropped at this step.
+5. **Metrics** (`analysis.compute_advanced_metrics`):
    - **TS%** — `PTS / (2 * (FGA + 0.44 * FTA))`, the standard shooting-efficiency formula.
    - **EFF** — a simplified per-game efficiency score (PTS + REB + AST + STL + BLK minus
      missed shots and turnovers), the same idea as the NBA's official "EFF" stat.
    - **Value Index** — `EFF / (salary in $M)`. Higher means more production per dollar.
-5. **Output** — a correlation matrix (salary vs. PTS/REB/AST/EFF/TS%/MIN), top-15 "most
-   undervalued" and "most overpaid" tables (`analysis.top_value_players` /
-   `analysis.bottom_value_players`), and five charts (`visualizations.py`).
+6. **Output** — a correlation matrix (salary vs. PTS/REB/AST/EFF/TS%/MIN/MAJOR_AWARDS),
+   top-15 "most undervalued" and "most overpaid" tables (`analysis.top_value_players` /
+   `analysis.bottom_value_players`, both including each player's `MAJOR_AWARDS` count),
+   and five charts (`visualizations.py`).
 
 ## Example output
 
@@ -84,9 +105,12 @@ reproducible without a live API call.
 main.py             CLI entry point
 analysis.py         data loading, aggregation, merging, metric calculations
 visualizations.py   chart generation
+scripts/
+  fetch_awards.py                 regenerates nba_player_awards.csv from the NBA Stats API
 data/
   nba_dailyleaders_2025_26.csv   real 2025-26 per-game box scores (582 players)
   nba_salaries_2025_26.csv       real 2025-26 salary + position data (475 players)
+  nba_player_awards.csv          career award counts (474 players)
 output/              generated CSV + charts (gitignored)
 examples/            committed example charts from the bundled dataset
 ```
@@ -112,3 +136,9 @@ examples/            committed example charts from the bundled dataset
   after it was pulled. Use `--live-data` for the latest numbers.
 - The NBA Stats API is undocumented and can change or rate-limit without notice; that's
   what the `--live-data` fallback path is for.
+- `MAJOR_AWARDS` is an unweighted sum — an MVP counts the same as a single All-Star
+  selection. It's meant as a rough "how decorated is this player" signal alongside Value
+  Index, not a serious accolade-weighted rating.
+- The awards file is a point-in-time snapshot of career totals, like the box score log —
+  it won't reflect awards announced after it was pulled (e.g. this season's eventual
+  All-Star selections, which are typically named partway through the season).
