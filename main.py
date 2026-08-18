@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
 """NBA Player Performance Analytics — entry point.
 
-Fetches live per-game stats from the official NBA Stats API and merges them with
-real 2025-26 salary/position data. No local box-score fallback is bundled for this
-season, so this requires network access.
-
 Usage:
-    python main.py                # 2025-26 season, top 80 scorers
+    python main.py                # bundled real 2025-26 box scores (offline), top 80
+    python main.py --live-data    # re-fetch current stats from the NBA Stats API instead
     python main.py --top-n 200    # widen to the top 200 scorers
-    python main.py --season 2024-25   # a different season (salary file stays 2025-26)
 """
 
 import argparse
@@ -21,8 +17,13 @@ import visualizations
 def parse_args():
     parser = argparse.ArgumentParser(description="NBA salary vs. performance analytics")
     parser.add_argument(
+        "--live-data", action="store_true",
+        help="Fetch live stats from the official NBA Stats API instead of the bundled "
+             "2025-26 box score log (requires network access).",
+    )
+    parser.add_argument(
         "--season", default="2025-26",
-        help="Season to fetch from the NBA Stats API (default: 2025-26).",
+        help="Season to fetch in live mode (default: 2025-26).",
     )
     parser.add_argument(
         "--top-n", type=int, default=80,
@@ -38,13 +39,21 @@ def parse_args():
 def main():
     args = parse_args()
 
-    print(f"Fetching live NBA stats for the {args.season} season...")
-    try:
-        stats_df = analysis.fetch_live_stats(season=args.season)
-    except analysis.LiveDataUnavailable as exc:
-        print(f"Live fetch failed: {exc}", file=sys.stderr)
-        sys.exit(1)
-    print(f"  Retrieved {len(stats_df)} players from the NBA Stats API.")
+    if args.live_data:
+        print(f"Fetching live NBA stats for the {args.season} season...")
+        try:
+            stats_df = analysis.fetch_live_stats(season=args.season)
+            print(f"  Retrieved {len(stats_df)} players from the NBA Stats API.")
+        except analysis.LiveDataUnavailable as exc:
+            print(f"  Live fetch failed ({exc})")
+            print("  Falling back to the bundled 2025-26 box score log.")
+            args.live_data = False
+
+    if not args.live_data:
+        print("Loading bundled 2025-26 season game logs...")
+        logs = analysis.load_game_logs()
+        stats_df = analysis.aggregate_season_stats(logs)
+        print(f"  Aggregated {len(stats_df)} players from {len(logs)} game log rows.")
 
     print(f"Selecting top {args.top_n} players by total season points...")
     stats_df = analysis.select_top_players(stats_df, n=args.top_n)

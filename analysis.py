@@ -9,6 +9,7 @@ import pandas as pd
 DATA_DIR = Path(__file__).parent / "data"
 OUTPUT_DIR = Path(__file__).parent / "output"
 
+GAME_LOG_PATH = DATA_DIR / "nba_dailyleaders_2025_26.csv"
 SALARY_PATH = DATA_DIR / "nba_salaries_2025_26.csv"
 
 STAT_COLUMNS = [
@@ -27,6 +28,38 @@ def _name_key(name: str) -> str:
     name = name.replace(".", "").strip().lower()
     name = re.sub(r"\s+(jr|sr|ii|iii|iv)\.?$", "", name)
     return re.sub(r"\s+", " ", name)
+
+
+def load_game_logs(path: Path = GAME_LOG_PATH) -> pd.DataFrame:
+    """Load the bundled per-game box score log (one row per player per game)."""
+    return pd.read_csv(path)
+
+
+def aggregate_season_stats(logs: pd.DataFrame) -> pd.DataFrame:
+    """Collapse per-game rows into one season-average row per player."""
+    grouped = logs.groupby("PLAYER")
+    agg = grouped.agg(
+        GP=("PTS", "size"),
+        TOTAL_PTS=("PTS", "sum"),
+        TEAM=("TEAM", lambda s: s.mode().iat[0]),
+        MIN=("MIN", "mean"),
+        PTS=("PTS", "mean"),
+        REB=("REB", "mean"),
+        AST=("AST", "mean"),
+        STL=("STL", "mean"),
+        BLK=("BLK", "mean"),
+        TOV=("TOV", "mean"),
+        FGM=("FGM", "mean"),
+        FGA=("FGA", "mean"),
+        FG3M=("FG3M", "mean"),
+        FG3A=("FG3A", "mean"),
+        FTM=("FTM", "mean"),
+        FTA=("FTA", "mean"),
+    ).reset_index()
+
+    round_cols = ["MIN", "PTS", "REB", "AST", "STL", "BLK", "TOV", "FGM", "FGA", "FG3M", "FG3A", "FTM", "FTA"]
+    agg[round_cols] = agg[round_cols].round(1)
+    return agg
 
 
 def fetch_live_stats(season: str = "2025-26", min_games: int = 10) -> pd.DataFrame:

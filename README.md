@@ -1,9 +1,9 @@
 # NBA Player Performance Analytics
 
 Analyzes the relationship between NBA player salaries and on-court performance for the
-2025-26 season, using live per-game stats from the official NBA Stats API and real
-salary/position data. Computes advanced metrics (True Shooting %, an efficiency score,
-a salary-adjusted "Value Index"), runs a correlation analysis, and produces four charts.
+2025-26 season, using real per-game box scores and real salary/position data. Computes
+advanced metrics (True Shooting %, an efficiency score, a salary-adjusted "Value Index"),
+runs a correlation analysis, and produces four charts.
 
 ![Salary vs Performance](examples/salary_vs_performance.png)
 
@@ -12,36 +12,40 @@ a salary-adjusted "Value Index"), runs a correlation analysis, and produces four
 ```bash
 pip install -r requirements.txt
 
-python main.py                # 2025-26 season, top 80 scorers, full run with charts
-python main.py --skip-viz     # skip chart generation, just produce the CSV
+python main.py                # bundled real 2025-26 box scores, offline, top 80 scorers
+python main.py --live-data    # re-fetch current stats from the NBA Stats API instead
 ```
 
 Other options:
 
 ```bash
 python main.py --top-n 200          # widen to the top 200 scorers instead of 80
-python main.py --season 2024-25     # analyze a different season's live stats
+python main.py --skip-viz           # skip chart generation, just produce the CSV
+python main.py --live-data --season 2024-25   # a different season, fetched live
 ```
 
-This requires network access — stats are fetched live for every run; there's no bundled
-offline dataset for the current season. Output lands in `output/`:
-`processed_player_data.csv` plus four PNG charts.
+Output lands in `output/`: `processed_player_data.csv` plus four PNG charts.
 
 ## Data sources
 
-- **Stats** — `analysis.fetch_live_stats()` calls `LeagueDashPlayerStats` from
-  [`nba_api`](https://github.com/swar/nba_api), the same endpoints stats.nba.com's own
-  site uses, for real per-game numbers (PTS, REB, AST, shooting splits, etc.).
+- **`data/nba_dailyleaders_2025_26.csv`** — real per-game box scores for the 2025-26
+  season (582 players, 26,651 game rows), pulled from the NBA Stats API's `LeagueGameLog`
+  endpoint and bundled so the project runs offline by default.
+  `analysis.aggregate_season_stats()` collapses it into one season-average row per player.
 - **`data/nba_salaries_2025_26.csv`** — real 2025-26 salaries and positions for 240
   players, parsed from a plain-text salary export (rank/name/team/salary, with position
   embedded in the name field, e.g. `"Stephen Curry, G"`).
+- **`--live-data`** re-fetches current per-game stats from the NBA Stats API instead of
+  the bundled file — useful for a different season or the latest games. If that call
+  fails, `main.py` catches `LiveDataUnavailable` and falls back to the bundled file
+  automatically.
 
 ## How it works
 
-1. **Fetch** — live per-game stats for every player with at least 10 games played in
-   the target season.
+1. **Aggregate** — box-score rows are grouped by player: games played, season-total
+   points (used for ranking), and per-game averages for every stat.
 2. **Select top N** — `analysis.select_top_players()` keeps the top 80 players (`--top-n`
-   to change it) ranked by total season points.
+   to change it) ranked by total season points, before the salary join.
 3. **Merge salary** — joined by player name, normalized to survive accents, periods, and
    suffixes (e.g. `Nikola Jokić` vs `Nikola Jokic`, trailing `Jr.`/`III`). Players with no
    salary match are dropped and the count is reported.
@@ -62,25 +66,28 @@ offline dataset for the current season. Output lands in `output/`:
 | `top_value_players.png` | Players with the highest production per salary dollar |
 | `position_breakdown.png` | Average salary and Value Index by position |
 
-More examples in [`examples/`](examples/).
+More examples in [`examples/`](examples/), generated from the bundled dataset so they're
+reproducible without a live API call.
 
 ## Project structure
 
 ```
 main.py             CLI entry point
-analysis.py         live data fetching, merging, metric calculations
+analysis.py         data loading, aggregation, merging, metric calculations
 visualizations.py   chart generation
 data/
-  nba_salaries_2025_26.csv   real 2025-26 salary + position data (240 players)
+  nba_dailyleaders_2025_26.csv   real 2025-26 per-game box scores (582 players)
+  nba_salaries_2025_26.csv       real 2025-26 salary + position data (240 players)
 output/              generated CSV + charts (gitignored)
-examples/            committed example charts from a live run
+examples/            committed example charts from the bundled dataset
 ```
 
 ## Caveats
 
-- Requires network access — there's no bundled local stats file for 2025-26, unlike
-  earlier versions of this project that shipped a static season dataset.
-- The salary file covers 240 notable players; roughly 10-15% of the top scorers by
-  points don't have a salary entry (recent rookies not yet in the export, or name
-  variants the normalizer doesn't catch) and are dropped from the salary-linked analysis.
-- The NBA Stats API is undocumented and can change or rate-limit without notice.
+- The salary file covers 240 notable players; about 9 of the top 80 scorers by points
+  don't have a salary entry (recent rookies not yet in the export, or name variants the
+  normalizer doesn't catch) and are dropped from the salary-linked analysis.
+- The bundled box score log is a point-in-time snapshot — it won't include games played
+  after it was pulled. Use `--live-data` for the latest numbers.
+- The NBA Stats API is undocumented and can change or rate-limit without notice; that's
+  what the `--live-data` fallback path is for.
