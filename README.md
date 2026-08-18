@@ -28,21 +28,28 @@ Output lands in `output/`: `processed_player_data.csv` plus five PNG charts.
 
 ## Data sources
 
-- **`data/nba_dailyleaders_2025_26.csv`** — real per-game box scores for the 2025-26
-  season (582 players, 26,651 game rows), pulled from the NBA Stats API's `LeagueGameLog`
-  endpoint and bundled so the project runs offline by default.
-  `analysis.aggregate_season_stats()` collapses it into one season-average row per player.
-- **`data/nba_salaries_2025_26.csv`** — real 2025-26 salaries for 240 players, parsed
-  from a plain-text salary export (rank/name/team/salary). The `POSITION` column is a
-  traditional PG/SG/SF/PF/C label assigned by hand for each of the 240 players — the NBA
-  Stats API itself only reports broad G/F/C (or hybrids like "G-F"), it hasn't tracked
-  the classic 5-position breakdown in years, so no live source has this. Treat it as each
-  player's primary position, not a precise per-possession classification (plenty of
-  players — Draymond Green, Domantas Sabonis, etc. — genuinely play multiple spots).
-- **`--live-data`** re-fetches current per-game stats from the NBA Stats API instead of
-  the bundled file — useful for a different season or the latest games. If that call
-  fails, `main.py` catches `LiveDataUnavailable` and falls back to the bundled file
-  automatically.
+- **Stats** — [`data/nba_dailyleaders_2025_26.csv`](data/nba_dailyleaders_2025_26.csv):
+  real per-game box scores for the 2025-26 season (582 players, 26,651 game rows), pulled
+  from the official **[NBA Stats API](https://www.nba.com/stats)** (`stats.nba.com`) via
+  its `LeagueGameLog` endpoint, accessed through the
+  **[`nba_api`](https://github.com/swar/nba_api)** Python client, and bundled so the
+  project runs offline by default. `analysis.aggregate_season_stats()` collapses it into
+  one season-average row per player. `--live-data` re-fetches current per-game stats from
+  the same API instead of the bundled file — useful for a different season or the latest
+  games. If that call fails, `main.py` catches `LiveDataUnavailable` and falls back to the
+  bundled file automatically.
+- **Salary** — [`data/nba_salaries_2025_26.csv`](data/nba_salaries_2025_26.csv): real
+  2025-26 salaries for 240 players, sourced from
+  **[ESPN NBA Salaries](https://www.espn.com/nba/salaries/_/year/2026/seasontype/4)**
+  (`espn.com/nba/salaries`), transcribed from a plain-text export (rank/name/team/salary).
+- **Position** — the `POSITION` column in the salary file is a traditional PG/SG/SF/PF/C
+  label assigned by hand for each of the 240 players, based on public knowledge of each
+  player's primary role. This isn't pulled from any of the sources above — the NBA Stats
+  API only reports broad G/F/C (or hybrids like "G-F"); it hasn't tracked the classic
+  5-position breakdown in years, and neither ESPN's salary table nor the box score log
+  includes it. Treat it as each player's primary position, not a precise
+  per-possession classification (plenty of players — Draymond Green, Domantas Sabonis,
+  etc. — genuinely play multiple spots).
 
 ## How it works
 
