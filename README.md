@@ -32,9 +32,13 @@ Output lands in `output/`: `processed_player_data.csv` plus four PNG charts.
   season (582 players, 26,651 game rows), pulled from the NBA Stats API's `LeagueGameLog`
   endpoint and bundled so the project runs offline by default.
   `analysis.aggregate_season_stats()` collapses it into one season-average row per player.
-- **`data/nba_salaries_2025_26.csv`** — real 2025-26 salaries and positions for 240
-  players, parsed from a plain-text salary export (rank/name/team/salary, with position
-  embedded in the name field, e.g. `"Stephen Curry, G"`).
+- **`data/nba_salaries_2025_26.csv`** — real 2025-26 salaries for 240 players, parsed
+  from a plain-text salary export (rank/name/team/salary). The `POSITION` column is a
+  traditional PG/SG/SF/PF/C label assigned by hand for each of the 240 players — the NBA
+  Stats API itself only reports broad G/F/C (or hybrids like "G-F"), it hasn't tracked
+  the classic 5-position breakdown in years, so no live source has this. Treat it as each
+  player's primary position, not a precise per-possession classification (plenty of
+  players — Draymond Green, Domantas Sabonis, etc. — genuinely play multiple spots).
 - **`--live-data`** re-fetches current per-game stats from the NBA Stats API instead of
   the bundled file — useful for a different season or the latest games. If that call
   fails, `main.py` catches `LiveDataUnavailable` and falls back to the bundled file
@@ -87,6 +91,9 @@ examples/            committed example charts from the bundled dataset
 - The salary file covers 240 notable players; about 9 of the top 80 scorers by points
   don't have a salary entry (recent rookies not yet in the export, or name variants the
   normalizer doesn't catch) and are dropped from the salary-linked analysis.
+- Positions are hand-assigned (see Data sources above) rather than pulled from a live
+  feed, since the traditional 5-position breakdown doesn't exist in official NBA data
+  anymore.
 - The bundled box score log is a point-in-time snapshot — it won't include games played
   after it was pulled. Use `--live-data` for the latest numbers.
 - The NBA Stats API is undocumented and can change or rate-limit without notice; that's
