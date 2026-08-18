@@ -38,18 +38,14 @@ Output lands in `output/`: `processed_player_data.csv` plus five PNG charts.
   the same API instead of the bundled file — useful for a different season or the latest
   games. If that call fails, `main.py` catches `LiveDataUnavailable` and falls back to the
   bundled file automatically.
-- **Salary** — [`data/nba_salaries_2025_26.csv`](data/nba_salaries_2025_26.csv): real
-  2025-26 salaries for 240 players, sourced from
+- **Salary & position** — [`data/nba_salaries_2025_26.csv`](data/nba_salaries_2025_26.csv):
+  real 2025-26 salaries and positions for 475 players, sourced from
   **[ESPN NBA Salaries](https://www.espn.com/nba/salaries/_/year/2026/seasontype/4)**
-  (`espn.com/nba/salaries`), transcribed from a plain-text export (rank/name/team/salary).
-- **Position** — the `POSITION` column in the salary file is a traditional PG/SG/SF/PF/C
-  label assigned by hand for each of the 240 players, based on public knowledge of each
-  player's primary role. This isn't pulled from any of the sources above — the NBA Stats
-  API only reports broad G/F/C (or hybrids like "G-F"); it hasn't tracked the classic
-  5-position breakdown in years, and neither ESPN's salary table nor the box score log
-  includes it. Treat it as each player's primary position, not a precise
-  per-possession classification (plenty of players — Draymond Green, Domantas Sabonis,
-  etc. — genuinely play multiple spots).
+  (`espn.com/nba/salaries`), transcribed from a plain-text export (rank/name/team/salary,
+  position embedded in the name field). Positions are ESPN's own broad G/F/C
+  classification — a handful of rows used the finer PG/SG/SF/PF labels (apparent
+  data-entry inconsistencies on ESPN's end); those are normalized to G/F/C to match the
+  rest.
 
 ## How it works
 
@@ -90,19 +86,19 @@ analysis.py         data loading, aggregation, merging, metric calculations
 visualizations.py   chart generation
 data/
   nba_dailyleaders_2025_26.csv   real 2025-26 per-game box scores (582 players)
-  nba_salaries_2025_26.csv       real 2025-26 salary + position data (240 players)
+  nba_salaries_2025_26.csv       real 2025-26 salary + position data (475 players)
 output/              generated CSV + charts (gitignored)
 examples/            committed example charts from the bundled dataset
 ```
 
 ## Caveats
 
-- The salary file covers 240 notable players; about 9 of the top 80 scorers by points
-  don't have a salary entry (recent rookies not yet in the export, or name variants the
-  normalizer doesn't catch) and are dropped from the salary-linked analysis.
-- Positions are hand-assigned (see Data sources above) rather than pulled from a live
-  feed, since the traditional 5-position breakdown doesn't exist in official NBA data
-  anymore.
+- The salary file covers 475 players — enough that, as of this writing, every one of the
+  top 80 scorers has a salary match. That can still slip below 100% over time as rosters
+  turn over (trades, new call-ups) faster than the bundled file is refreshed; any
+  unmatched players are dropped and the count is reported.
+- Positions are ESPN's broad G/F/C classification, not the traditional PG/SG/SF/PF/C
+  breakdown — see Data sources above.
 - The "most overpaid" list (`bottom_value_players.png`) is dominated by max-contract
   superstars (Curry, Booker, LeBron, Durant, etc.) — that's expected, not a bug. Value
   Index measures production *per salary dollar*, and at the $50M+ tier even an All-NBA
