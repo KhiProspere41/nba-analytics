@@ -146,7 +146,15 @@ def correlation_matrix(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def top_value_players(df: pd.DataFrame, n: int = 15) -> pd.DataFrame:
+    """Players producing the most per salary dollar (best value)."""
     return df.nlargest(n, "VALUE_INDEX")[
+        ["PLAYER", "TEAM", "POSITION", "SALARY", "PTS", "EFF", "VALUE_INDEX"]
+    ].reset_index(drop=True)
+
+
+def bottom_value_players(df: pd.DataFrame, n: int = 15) -> pd.DataFrame:
+    """Players producing the least per salary dollar (worst value / most overpaid)."""
+    return df.nsmallest(n, "VALUE_INDEX")[
         ["PLAYER", "TEAM", "POSITION", "SALARY", "PTS", "EFF", "VALUE_INDEX"]
     ].reset_index(drop=True)
 

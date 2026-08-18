@@ -59,6 +59,20 @@ def plot_top_value_players(value_df, out_dir: Path = OUTPUT_DIR):
     return path
 
 
+def plot_bottom_value_players(value_df, out_dir: Path = OUTPUT_DIR):
+    fig, ax = plt.subplots(figsize=(9, 7))
+    data = value_df.sort_values("VALUE_INDEX", ascending=False)
+    bars = ax.barh(data["PLAYER"], data["VALUE_INDEX"], color=sns.color_palette("deep")[3])
+    ax.set_xlabel("Value Index (EFF per $1M salary)")
+    ax.set_title("Most Overpaid Players")
+    ax.bar_label(bars, fmt="%.1f", padding=3, fontsize=8)
+    fig.tight_layout()
+    path = out_dir / "bottom_value_players.png"
+    fig.savefig(path)
+    plt.close(fig)
+    return path
+
+
 def plot_position_breakdown(position_df, out_dir: Path = OUTPUT_DIR):
     fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
@@ -79,12 +93,13 @@ def plot_position_breakdown(position_df, out_dir: Path = OUTPUT_DIR):
     return path
 
 
-def generate_all_charts(df, corr_df, value_df, position_df, out_dir: Path = OUTPUT_DIR):
+def generate_all_charts(df, corr_df, top_value_df, bottom_value_df, position_df, out_dir: Path = OUTPUT_DIR):
     out_dir.mkdir(exist_ok=True)
     paths = [
         plot_salary_vs_performance(df, out_dir),
         plot_correlation_heatmap(corr_df, out_dir),
-        plot_top_value_players(value_df, out_dir),
+        plot_top_value_players(top_value_df, out_dir),
+        plot_bottom_value_players(bottom_value_df, out_dir),
         plot_position_breakdown(position_df, out_dir),
     ]
     return paths

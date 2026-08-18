@@ -3,7 +3,7 @@
 Analyzes the relationship between NBA player salaries and on-court performance for the
 2025-26 season, using real per-game box scores and real salary/position data. Computes
 advanced metrics (True Shooting %, an efficiency score, a salary-adjusted "Value Index"),
-runs a correlation analysis, and produces four charts.
+runs a correlation analysis, and produces five charts.
 
 ![Salary vs Performance](examples/salary_vs_performance.png)
 
@@ -24,7 +24,7 @@ python main.py --skip-viz           # skip chart generation, just produce the CS
 python main.py --live-data --season 2024-25   # a different season, fetched live
 ```
 
-Output lands in `output/`: `processed_player_data.csv` plus four PNG charts.
+Output lands in `output/`: `processed_player_data.csv` plus five PNG charts.
 
 ## Data sources
 
@@ -58,8 +58,9 @@ Output lands in `output/`: `processed_player_data.csv` plus four PNG charts.
    - **EFF** — a simplified per-game efficiency score (PTS + REB + AST + STL + BLK minus
      missed shots and turnovers), the same idea as the NBA's official "EFF" stat.
    - **Value Index** — `EFF / (salary in $M)`. Higher means more production per dollar.
-5. **Output** — a correlation matrix (salary vs. PTS/REB/AST/EFF/TS%/MIN), a top-15
-   "most undervalued players" table, and four charts (`visualizations.py`).
+5. **Output** — a correlation matrix (salary vs. PTS/REB/AST/EFF/TS%/MIN), top-15 "most
+   undervalued" and "most overpaid" tables (`analysis.top_value_players` /
+   `analysis.bottom_value_players`), and five charts (`visualizations.py`).
 
 ## Example output
 
@@ -68,6 +69,7 @@ Output lands in `output/`: `processed_player_data.csv` plus four PNG charts.
 | `salary_vs_performance.png` | Scatter of salary vs. efficiency, colored by position |
 | `correlation_heatmap.png` | Correlation matrix across salary and performance stats |
 | `top_value_players.png` | Players with the highest production per salary dollar |
+| `bottom_value_players.png` | Highest-paid players producing the least per dollar |
 | `position_breakdown.png` | Average salary and Value Index by position |
 
 More examples in [`examples/`](examples/), generated from the bundled dataset so they're
