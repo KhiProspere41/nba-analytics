@@ -97,7 +97,8 @@ Output lands in `output/`: `processed_player_data.csv` plus five PNG charts.
 | `position_breakdown.png` | Average salary and Value Index by position |
 
 More examples in [`examples/`](examples/), generated from the bundled dataset so they're
-reproducible without a live API call.
+reproducible without a live API call. For a full walkthrough of each chart with the
+actual numbers behind it, see [`CHARTS.md`](CHARTS.md).
 
 ## Project structure
 
