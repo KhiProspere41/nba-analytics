@@ -101,6 +101,10 @@ examples/            committed example charts from the bundled dataset
   Index measures production *per salary dollar*, and at the $50M+ tier even an All-NBA
   season can't keep pace with the denominator. Read it as "lowest surplus value relative
   to cost," not "worst players."
+- Symmetrically, the "most undervalued" list (`top_value_players.png`) is dominated by
+  players on rookie-scale or minimum contracts producing solid rotation-level stats —
+  not necessarily the best players in the league, just the cheapest ones relative to
+  their output. Read it as "highest surplus value relative to cost," not "best players."
 - The bundled box score log is a point-in-time snapshot — it won't include games played
   after it was pulled. Use `--live-data` for the latest numbers.
 - The NBA Stats API is undocumented and can change or rate-limit without notice; that's
