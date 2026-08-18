@@ -3,7 +3,7 @@
 Analyzes the relationship between NBA player salaries and on-court performance for the
 2025-26 season, using real per-game box scores and real salary/position data. Computes
 advanced metrics (True Shooting %, an efficiency score, a salary-adjusted "Value Index"),
-runs a correlation analysis, and produces seven charts.
+runs a correlation analysis, and produces six charts.
 
 ![Salary vs Performance](examples/salary_vs_performance.png)
 
@@ -24,7 +24,7 @@ python main.py --skip-viz           # skip chart generation, just produce the CS
 python main.py --live-data --season 2024-25   # a different season, fetched live
 ```
 
-Output lands in `output/`: `processed_player_data.csv` plus seven PNG charts.
+Output lands in `output/`: `processed_player_data.csv` plus six PNG charts.
 
 ## Data sources
 
@@ -84,7 +84,7 @@ Output lands in `output/`: `processed_player_data.csv` plus seven PNG charts.
 6. **Output** — a correlation matrix (salary vs. PTS/REB/AST/EFF/TS%/MIN/MAJOR_AWARDS),
    top-15 "most undervalued," "most overpaid," and "most decorated" tables
    (`analysis.top_value_players` / `analysis.bottom_value_players` /
-   `analysis.most_decorated_players`), and seven charts (`visualizations.py`).
+   `analysis.most_decorated_players`), and six charts (`visualizations.py`).
 
 ## Example output
 
@@ -94,7 +94,6 @@ Output lands in `output/`: `processed_player_data.csv` plus seven PNG charts.
 | `correlation_heatmap.png` | Correlation matrix across salary and performance stats |
 | `top_value_players.png` | Players with the highest production per salary dollar |
 | `bottom_value_players.png` | Highest-paid players producing the least per dollar |
-| `awards_vs_salary.png` | Scatter of career major awards vs. salary, colored by position |
 | `most_decorated_players.png` | Players with the highest career major-award counts |
 | `position_breakdown.png` | Average salary and Value Index by position |
 

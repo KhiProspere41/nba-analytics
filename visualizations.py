@@ -73,24 +73,6 @@ def plot_bottom_value_players(value_df, out_dir: Path = OUTPUT_DIR):
     return path
 
 
-def plot_awards_vs_salary(df, out_dir: Path = OUTPUT_DIR):
-    fig, ax = plt.subplots(figsize=(9, 6))
-    sns.scatterplot(
-        data=df, x="MAJOR_AWARDS", y="SALARY", hue="POSITION", size="PTS",
-        sizes=(30, 220), alpha=0.75, ax=ax,
-    )
-    ax.set_xlabel("Career Major Awards (MVP, All-Star, All-NBA, etc., summed)")
-    ax.set_ylabel("Salary ($)")
-    ax.set_title("Career Awards vs. Salary")
-    ax.yaxis.set_major_formatter(lambda y, _: f"${y/1e6:.0f}M")
-    ax.legend(bbox_to_anchor=(1.02, 1), loc="upper left", fontsize=8)
-    fig.tight_layout()
-    path = out_dir / "awards_vs_salary.png"
-    fig.savefig(path)
-    plt.close(fig)
-    return path
-
-
 def plot_most_decorated_players(decorated_df, out_dir: Path = OUTPUT_DIR):
     fig, ax = plt.subplots(figsize=(9, 7))
     data = decorated_df.sort_values("MAJOR_AWARDS")
@@ -134,7 +116,6 @@ def generate_all_charts(
         plot_correlation_heatmap(corr_df, out_dir),
         plot_top_value_players(top_value_df, out_dir),
         plot_bottom_value_players(bottom_value_df, out_dir),
-        plot_awards_vs_salary(df, out_dir),
         plot_most_decorated_players(decorated_df, out_dir),
         plot_position_breakdown(position_df, out_dir),
     ]
