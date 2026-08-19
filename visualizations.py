@@ -4,6 +4,7 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import seaborn as sns
+from matplotlib.lines import Line2D
 
 OUTPUT_DIR = Path(__file__).parent / "output"
 
@@ -18,16 +19,33 @@ POSITION_MARKERS = {"G": "o", "F": "^", "C": "s"}  # circle, triangle, square
 
 def plot_salary_vs_performance(df, out_dir: Path = OUTPUT_DIR):
     fig, ax = plt.subplots(figsize=(9, 6))
-    sns.scatterplot(
-        data=df, x="SALARY", y="EFF", hue="POSITION", style="POSITION",
-        markers=POSITION_MARKERS, size="PTS", sizes=(30, 220),
-        alpha=0.8, edgecolor="black", linewidth=0.4, ax=ax,
-    )
+    cmap = plt.get_cmap("viridis")
+    vmin, vmax = df["PTS"].min(), df["PTS"].max()
+
+    scatter = None
+    for position, marker in POSITION_MARKERS.items():
+        subset = df[df["POSITION"] == position]
+        scatter = ax.scatter(
+            subset["SALARY"], subset["EFF"], c=subset["PTS"], cmap=cmap,
+            vmin=vmin, vmax=vmax, marker=marker, s=90, alpha=0.85,
+            edgecolor="black", linewidth=0.4,
+        )
+
+    cbar = fig.colorbar(scatter, ax=ax)
+    cbar.set_label("Points per game")
+
     ax.set_xlabel("Salary ($)")
     ax.set_ylabel("Efficiency (EFF, per game)")
     ax.set_title("Salary vs. On-Court Performance")
     ax.xaxis.set_major_formatter(lambda x, _: f"${x/1e6:.0f}M")
-    ax.legend(bbox_to_anchor=(1.02, 1), loc="upper left", fontsize=8)
+
+    # Neutral gray legend swatches: shape carries the position meaning here, not color.
+    legend_handles = [
+        Line2D([0], [0], marker=marker, color="w", markerfacecolor="gray",
+               markeredgecolor="black", markersize=9, label=position)
+        for position, marker in POSITION_MARKERS.items()
+    ]
+    ax.legend(handles=legend_handles, title="Position", loc="upper left", fontsize=8)
     fig.tight_layout()
     path = out_dir / "salary_vs_performance.png"
     fig.savefig(path)
